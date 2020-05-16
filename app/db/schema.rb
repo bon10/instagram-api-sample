@@ -28,6 +28,8 @@ ActiveRecord::Schema.define(version: 2020_05_15_154005) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "provider"
+    t.string "uid"
     t.string "username"
     t.integer "follower_count"
     t.integer "follow_count"

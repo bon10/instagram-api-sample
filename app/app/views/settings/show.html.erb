@@ -8,6 +8,7 @@
     follower: <%= @user.follower_count %> / follow: <%= @user.follow_count %><br/>
     <button id="release_insta_integration">Instagram連携解除</button>
   <% else %>
+    <%= link_to 'Facebook連携', '/auth/facebook' %>
     <button id="enable_insta_integration">Instagram連携</button>
   <% end %>
 </p>
