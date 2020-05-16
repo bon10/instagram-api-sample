@@ -3,20 +3,24 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-  has_one :setting 
+
+  has_one :setting, dependent: :destroy, autosave: true
 
   after_create :save_setting
 
-  def self.find_or_create_from_auth_hash(auth_hash)
+  def update_or_create_insta_info(insta, auth_hash)
     provider = auth_hash[:provider]
     uid = auth_hash[:uid]
     name = auth_hash[:info][:name]
-    id = auth[:info][:id]
+    self.provider       = auth_hash[:provider]
+    self.uid            = auth_hash[:uid]
+    self.username       = insta["username"]
+    self.follower_count = insta["followers_count"]
+    self.follow_count   = insta["follows_count"]
 
-   self.find(provider: provider,uid: uid) do |user|
-     user.insta_id = id
-     user.username = name
-   end
+    # 関連のsettingsも更新する
+    self.setting.update_insta_coordination
+    self.save!
   end
 
   #---------------------------------
@@ -24,13 +28,9 @@ class User < ApplicationRecord
   #---------------------------------
   private
 
+  # 1対1の関連となっているsettingを、Userのcreate後に生成
   def save_setting
     setting = self.build_setting
     setting.save
   end
-
-  def self.dummy_email(auth)
-    "#{auth.uid}-#{auth.provider}@example.com"
-  end
-
 end

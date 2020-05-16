@@ -6,8 +6,8 @@ Rails.application.routes.draw do
   get '/auth/:provider/callback', to: 'sessions#create'
   
   # settings
-  get  'setting/:id',          to: 'settings#show',     as: 'settings'
-  get  'setting/:id/facebook', to: 'settings#facebook', as: 'settings_facebook'
+  get  'setting/:id',          to: 'settings#show',            as: 'settings'
+  get  'setting/:id/facebook', to: 'settings#enble_instagram', as: 'settings_instagram'
   post 'setting/update',       to: 'settings#update'
   
 end

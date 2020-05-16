@@ -19,17 +19,16 @@ class SettingsController < Users::ApplicationController
       end
     end
   end
-
-  def facebook
-    Rails.logger.info params.inspect
-    redirect_to settings_path(params[:id]), notice: '連携しました'
-  end
-
-
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_setting
+      if current_user.id != params[:id].try(:to_i)
+        return redirect_to settings_path(current_user.id)
+      end
       @setting = Setting.find_by_user_id(params[:id])
+      @user = @setting.user
+      return  
     end
 
     # Only allow a list of trusted parameters through.
