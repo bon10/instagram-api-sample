@@ -8,7 +8,7 @@ case "$1" in
     docker-compose -f docker/docker-compose.yml up -d
     ;;
   "down")
-    docker-compose -f docker/docker-compose.ymldown
+    docker-compose -f docker/docker-compose.yml down
     ;;
   "build")
     docker build -t insta-api-sample-server -f app/Dockerfile .

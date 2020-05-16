@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 services:
   db:
     image: mysql:5.5
@@ -7,18 +7,21 @@ services:
       MYSQL_DATABASE: root
     ports:
       - "3306:3306"
-    container_name: "db"
+    volumes:
+      - ./db/mysql_data:/var/lib/mysql
+    container_name: "insta-sample-db"
 
   web:
     tty: true
     build:
       context: .
     ports:
-      - '3000:3000'
+      - "3000:3000"
+      - "3001:3001"
     volumes:
-      - ../app:/app
+      - ../:/app
     working_dir: /app
-    container_name: "web"
+    container_name: "insta-sample-web"
     links:
-      - db
-
+      - "db"
+ 

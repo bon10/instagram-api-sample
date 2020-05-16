@@ -1,11 +1,9 @@
 class SettingsController < Users::ApplicationController
   before_action :set_setting, only: [:show, :edit, :update, :destroy]
-  before_action :current_user_id
 
   # GET /settings/1
   # GET /settings/1.json
   def show
-
   end
 
   # PATCH/PUT /settings/1
@@ -22,8 +20,9 @@ class SettingsController < Users::ApplicationController
     end
   end
 
-  def instagram_integration
-    
+  def facebook
+    Rails.logger.info params.inspect
+    redirect_to settings_path(params[:id]), notice: '連携しました'
   end
 
 
@@ -36,9 +35,5 @@ class SettingsController < Users::ApplicationController
     # Only allow a list of trusted parameters through.
     def setting_params
       params.require(:setting).permit(:is_insta, :display_mode, :user_id)
-    end
-
-    def current_user_id
-      Rails.logger.info current_user.inspect
     end
 end
